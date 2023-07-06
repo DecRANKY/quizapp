@@ -4,23 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QuizApp</title>
+    
     <link rel="stylesheet" href="./assets/css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script defer src="./assets/script.js"></script>
+
 </head>
-<body>
-    
-    <main>
-        <div class="card" style="width: 18rem;">
-            <img src="./assets/img/headerLogo.jpg" class="card-img-top" alt="Did you know?">
-            <div class="card-body">
-              <h5 class="card-title">Bereit für ein ultimatives Gaming-Quiz?</h5>
-              <p class="card-text">
-                 Teste dein Wissen über die faszinierende Welt der Videospiele und zeig, dass du ein wahrer Gamer bist!
-                </p>
-              <a href="#" class="btn btn-primary" onclick="startQuiz()">Starte das Quiz!</a>
-            </div>
-        </div>
+
+
+<body onload="renderQuiz()">
+    <main id="mainContainer">
+
     </main>
 </body>
 </html>

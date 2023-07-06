@@ -22,3 +22,16 @@ main {
 .card-body h5 {
     text-align: center;
 }
+
+.answerItem {
+    text-align: center;
+}
+
+.btnContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btnContainer a {
+    font-size: 14px;
+}

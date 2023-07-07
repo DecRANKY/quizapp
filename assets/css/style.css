@@ -27,6 +27,11 @@ main {
     text-align: center;
 }
 
+.answerItem:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+
 .btnContainer {
     display: flex;
     justify-content: space-between;
@@ -34,4 +39,9 @@ main {
 
 .btnContainer a {
     font-size: 14px;
+}
+
+.bg-success,
+.bg-danger {
+    color: white !important;
 }

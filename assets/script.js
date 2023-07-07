@@ -10,6 +10,7 @@ let quizTasks = [
         answer2: 'George Lucas',
         answer3: 'Steven Spielberg',
         answer4: 'James Cameron',
+        rightAnswer: 3
     },
     {
         image: './assets/img/medalofhonor.jpg',
@@ -19,6 +20,7 @@ let quizTasks = [
         answer2: '2003',
         answer3: '2009',
         answer4: '2006',
+        rightAnswer: 3
     },
     {
         image: './assets/img/medalofhonor.jpg',
@@ -28,6 +30,7 @@ let quizTasks = [
         answer2: 'Ennio Morricone',
         answer3: 'Fusajiro Yamauchi',
         answer4: 'Kawasaki Masaru',
+        rightAnswer: 1
     },
     {
         image: './assets/img/medalofhonor.jpg',
@@ -37,6 +40,7 @@ let quizTasks = [
         answer2: 'Mario Kart 8 Deluxe',
         answer3: 'The Last of Us',
         answer4: 'Cyberpunk 2077',
+        rightAnswer: 1
     },
     {
         image: './assets/img/medalofhonor.jpg',
@@ -46,6 +50,7 @@ let quizTasks = [
         answer2: 'Kronkorken',
         answer3: 'Silber Münzen',
         answer4: 'Dollar',
+        rightAnswer: 2
     },
     {
         image: './assets/img/medalofhonor.jpg',
@@ -55,6 +60,7 @@ let quizTasks = [
         answer2: 'Giga-Pokemon',
         answer3: 'Ultra-Pokemon',
         answer4: 'Dynamax-Pokemon',
+        rightAnswer: 4
     },
     {
         image: './assets/img/medalofhonor.jpg',
@@ -64,6 +70,7 @@ let quizTasks = [
         answer2: 'John Marston',
         answer3: 'Michael De Santa',
         answer4: 'Hermit Crab',
+        rightAnswer: 2
     },
     {
         image: './assets/img/medalofhonor.jpg',
@@ -73,6 +80,7 @@ let quizTasks = [
         answer2: '1982',
         answer3: '2003',
         answer4: '1991',
+        rightAnswer: 1
     },
     {
         image: './assets/img/medalofhonor.jpg',
@@ -82,6 +90,7 @@ let quizTasks = [
         answer2: 'UFOs',
         answer3: 'Pferdekutschen',
         answer4: 'Dixi-Toiletten',
+        rightAnswer: 2
     },
     {
         image: './assets/img/medalofhonor.jpg',
@@ -91,6 +100,7 @@ let quizTasks = [
         answer2: 'Kuba',
         answer3: 'Nordkalifornien',
         answer4: 'Norwegen',
+        rightAnswer: 3
     }
 ];
 
@@ -120,10 +130,10 @@ function nextQuestion(){
         currentRound++;
         quizCard.innerHTML = '';
         quizCard.innerHTML = renderQuestion();
+
     } else {
         console.log('Es gibt keine weiteren Fragen');
     }
-    
 }
 
 function previousQuestion() {
@@ -134,42 +144,56 @@ function previousQuestion() {
         currentRound--;
         quizCard.innerHTML = '';
         quizCard.innerHTML = renderQuestion();
+
     } else {
         console.log('Du bist bereits bei der ersten Frage angelangt');
     }
 }
+
+
+function selectAnswer(selection) {
+    let selectedQuestionNumber = selection.slice(-1);
+    let correctAnswer = `answer${quizTasks[currentRound].rightAnswer}`;
+    if (selectedQuestionNumber == quizTasks[currentRound].rightAnswer) {
+        document.getElementById(selection).classList.add('bg-success');
+    } else {
+        document.getElementById(selection).classList.add('bg-danger');
+        document.getElementById(correctAnswer).classList.add('bg-success');
+    }
+}
+
 
 function renderQuestion() {
     return /*html*/`
                                         <img src="${quizTasks[currentRound].image}" class="card-img-top" alt="${quizTasks[currentRound].imageDescription}">
                                         <div class="card-body">
                                             <h5 class="card-title">${quizTasks[currentRound].question}</h5>
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <span class="answerItem">${quizTasks[currentRound].answer1}</span>
+                                            <div id="answer1" class="card answerItem">
+                                                <div class="card-body" onclick="selectAnswer('answer1')">
+                                                    <span>${quizTasks[currentRound].answer1}</span>
                                                 </div>
                                             </div>
-                                            <div class="card">
+                                            <div id="answer2" class="card answerItem" onclick="selectAnswer('answer2')">
                                                 <div class="card-body">
-                                                    <span class="answerItem">${quizTasks[currentRound].answer2}</span>
+                                                    <span>${quizTasks[currentRound].answer2}</span>
                                                 </div>
                                             </div>
-                                            <div class="card">
+                                            <div id="answer3" class="card answerItem" onclick="selectAnswer('answer3')">
                                                 <div class="card-body">
-                                                    <span class="answerItem">${quizTasks[currentRound].answer3}</span>
+                                                    <span>${quizTasks[currentRound].answer3}</span>
                                                 </div>
                                             </div>
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <span class="answerItem">${quizTasks[currentRound].answer4}</span>
+                                            <div id="answer4" class="card answerItem"onclick="selectAnswer('answer4')">
+                                                <div  class="card-body">
+                                                    <span>${quizTasks[currentRound].answer4}</span>
                                                 </div>
                                             </div>
                                             <div>
-                                                <span>${currentQuestion} von 10 Fragen</span>
+                                                <span>${currentQuestion} von ${quizTasks.length} Fragen</span>
                                             </div>
                                             <div class="btnContainer">
-                                                <a href="#" class="btn btn-secondary lastQuestion" onclick="previousQuestion()">Vorherige Frage</a>
-                                                <a href="#" class="btn btn-primary nextQuestion" onclick="nextQuestion()">Nächste Frage</a>
+                                                <a href="#" id="previousButton" class="btn btn-secondary lastQuestion" onclick="previousQuestion()">Vorherige Frage</a>
+                                                <a href="#" id="nextButton" class="btn btn-primary nextQuestion" onclick="nextQuestion()">Nächste Frage</a>
                                             </div>
                                         </div>
     `;

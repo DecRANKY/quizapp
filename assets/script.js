@@ -14,7 +14,7 @@ let quizTasks = [
         rightAnswer: 3
     },
     {
-        image: './assets/img/medalofhonor.jpg',
+        image: './assets/img/minecraft.jpg',
         imageDescription: 'Minecraft',
         question: 'Wann wurde "Minecraft" veröffentlicht?',
         answer1: '2001',
@@ -24,8 +24,8 @@ let quizTasks = [
         rightAnswer: 3
     },
     {
-        image: './assets/img/medalofhonor.jpg',
-        imageDescription: 'Medalf of Honor',
+        image: './assets/img/wii.jpg',
+        imageDescription: 'Nintendo Wii',
         question: 'Die ikonische Musik der 2006 veröffentlichten Nintendo Wii Konsole wurde von wem komponiert?',
         answer1: 'Kazumi Totaka',
         answer2: 'Ennio Morricone',
@@ -34,8 +34,8 @@ let quizTasks = [
         rightAnswer: 1
     },
     {
-        image: './assets/img/medalofhonor.jpg',
-        imageDescription: 'Medalf of Honor',
+        image: './assets/img/last-of-us.jpg',
+        imageDescription: 'The Last of Us',
         question: 'Im Juni 2020 ist der neueste Hit von Naughty Dog erschienen. Womit wurde der US-amerikanische Viedeospielentwickler bekannt?',
         answer1: 'Crash Bandicoot',
         answer2: 'Mario Kart 8 Deluxe',
@@ -44,8 +44,8 @@ let quizTasks = [
         rightAnswer: 1
     },
     {
-        image: './assets/img/medalofhonor.jpg',
-        imageDescription: 'Medalf of Honor',
+        image: './assets/img/fallout.jpg',
+        imageDescription: 'Fallout',
         question: 'In der Spielereihe Fallout von Bethesda bezahlt ihr nach einer atomaren Katastrophe mit einer für viele wohl ziemlich fragwürdigen Währung. Womit bezahlt ihr in den meisten Fallout-Spielen?',
         answer1: 'Gummibänder',
         answer2: 'Kronkorken',
@@ -54,8 +54,8 @@ let quizTasks = [
         rightAnswer: 2
     },
     {
-        image: './assets/img/medalofhonor.jpg',
-        imageDescription: 'Medalf of Honor',
+        image: './assets/img/schwert-und-schild.jpg',
+        imageDescription: 'Pokémon Schwert und Schild',
         question: 'Wie heißen die Riesen-Monster in "Pokémon Schwert und Schild"?',
         answer1: 'Mega-Pokemon',
         answer2: 'Giga-Pokemon',
@@ -64,8 +64,8 @@ let quizTasks = [
         rightAnswer: 4
     },
     {
-        image: './assets/img/medalofhonor.jpg',
-        imageDescription: 'Medalf of Honor',
+        image: './assets/img/red-dead-redemption.jpg',
+        imageDescription: 'Red Dead Redemption',
         question: '"Red Dead Redemption" hat viele Spieler begeistert und auch der Nachfolger "Red Dead Redemption 2" erfreut sich großer Beliebtheit. Doch wie heißt eigentlich der Protagonist aus dem ersten Teil?',
         answer1: 'Arthur Morgan',
         answer2: 'John Marston',
@@ -74,8 +74,8 @@ let quizTasks = [
         rightAnswer: 2
     },
     {
-        image: './assets/img/medalofhonor.jpg',
-        imageDescription: 'Medalf of Honor',
+        image: './assets/img/pong_Arcade.jpg',
+        imageDescription: 'Pong',
         question: 'Pong gehört zu einer der ersten kommerziell erfolgreichsten Spiele der Welt, doch wann erschien das Tischtennisspiel auf dem Gaming-Markt?',
         answer1: '1972',
         answer2: '1982',
@@ -84,8 +84,8 @@ let quizTasks = [
         rightAnswer: 1
     },
     {
-        image: './assets/img/medalofhonor.jpg',
-        imageDescription: 'Medalf of Honor',
+        image: './assets/img/gta5.jpg',
+        imageDescription: 'Grand Theft Auto 5',
         question: 'Es sind fünf an der Zahl und sie erwarten euch an verschiedensten Standorten, wenn ihr GTA 5 komplett durchgespielt habt. Doch welches Gefährt hat Rockstar als Easter Egg in GTA 5 versteckt?',
         answer1: 'Concorde',
         answer2: 'UFOs',
@@ -94,8 +94,8 @@ let quizTasks = [
         rightAnswer: 2
     },
     {
-        image: './assets/img/medalofhonor.jpg',
-        imageDescription: 'Medalf of Honor',
+        image: './assets/img/a-way-out.jpg',
+        imageDescription: 'A Way Out',
         question: 'In "A Way Out" könnt ihr zusammen mit einem Freund den Gefängnisausbruch von Vincent und Leo planen und durchziehen, doch in welchem Gebiet steht das Gefängnis, aus dem die beiden flüchten?',
         answer1: 'Kanada',
         answer2: 'Kuba',
@@ -228,7 +228,7 @@ function renderResultCard() {
 
 function renderQuestion() {
     return /*html*/`
-                                        <img src="${quizTasks[currentRound].image}" class="card-img-top" alt="${quizTasks[currentRound].imageDescription}">
+                                        <img src="${quizTasks[currentRound].image}" class="card-img-top quizHeadImage" alt="${quizTasks[currentRound].imageDescription}">
                                         <div class="card-body onGoingQuiz">
                                             <h5 class="card-title headline">${quizTasks[currentRound].question}</h5>
                                             <div id="answer1" class="card answerItem">

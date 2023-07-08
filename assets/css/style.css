@@ -15,6 +15,11 @@ main {
     min-width: 100vw;
 }
 
+.quizHeadImage {
+    height: 163px;
+    object-fit: cover;
+}
+
 .card-body {
     display: flex;
     flex-direction: column;

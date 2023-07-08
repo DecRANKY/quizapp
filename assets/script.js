@@ -1,5 +1,6 @@
 let currentRound = -1;
 let currentQuestion = 0;
+let currentScore = 0;
 let quizCard;
 let quizTasks = [
     {
@@ -109,21 +110,44 @@ function renderQuiz() {
     let mainContainer = document.getElementById('mainContainer');
 
     mainContainer.innerHTML = /*html*/`
-                                <div id="quizCard" class="card" style="width: 18rem;">
+                                <div id="quizCard" class="card">
                                     <img src="./assets/img/headerLogo.jpg" class="card-img-top" alt="Did you know?">
                                     <div class="card-body">
                                         <h5 class="card-title">Bereit für ein ultimatives Gaming-Quiz?</h5>
                                         <p class="card-text">
                                             Teste dein Wissen über die faszinierende Welt der Videospiele und zeig, dass du ein wahrer Gamer bist!
                                         </p>
-                                        <a href="#" class="btn btn-primary" onclick="nextQuestion()">Quiz Starten!</a>
+                                        <div class="btnContainer centerButton">
+                                        <button class="btn btn-primary" onclick="startQuiz()">Quiz Starten!</button>
+                                        </div>
                                     </div>
                                 </div>
     `;
 }
 
+function startQuiz() {
+    resetRound()
+
+    quizCard = document.getElementById('quizCard');
+
+    quizCard.innerHTML = '';
+    quizCard.innerHTML = renderQuestion();
+    quizCard.classList.add('onGoingQuizContainer');
+    checkAnswer()
+
+    document.getElementById('nextButton').style.display = 'block';
+    document.getElementById('showResultButton').style.display = 'none';
+}
+
+function resetRound() {
+    currentRound = 0;
+    currentQuestion = 1;
+    currentScore = 0;
+}
+
 function nextQuestion(){
     quizCard = document.getElementById('quizCard');
+
 
     if (currentRound < quizTasks.length-1) {
         currentQuestion++;
@@ -134,6 +158,7 @@ function nextQuestion(){
     } else {
         console.log('Es gibt keine weiteren Fragen');
     }
+    checkAnswer()
 }
 
 function previousQuestion() {
@@ -148,6 +173,7 @@ function previousQuestion() {
     } else {
         console.log('Du bist bereits bei der ersten Frage angelangt');
     }
+    checkAnswer()
 }
 
 
@@ -156,18 +182,55 @@ function selectAnswer(selection) {
     let correctAnswer = `answer${quizTasks[currentRound].rightAnswer}`;
     if (selectedQuestionNumber == quizTasks[currentRound].rightAnswer) {
         document.getElementById(selection).classList.add('bg-success');
+        currentScore++;
     } else {
         document.getElementById(selection).classList.add('bg-danger');
         document.getElementById(correctAnswer).classList.add('bg-success');
     }
+    document.getElementById('nextButton').disabled = false;
+    document.getElementById('showResultButton').disabled = false;
+}
+
+function checkAnswer() {
+
+    if (currentRound == 0) {
+        document.getElementById('previousButton').disabled = true;
+    } else if (currentQuestion == quizTasks.length) {
+        document.getElementById('nextButton').style.display = 'none';
+        document.getElementById('showResultButton').style.display = 'block';
+    } else {
+        document.getElementById('previousButton').disabled = false;
+    }
+}
+
+function showResult() {
+    quizCard = document.getElementById('quizCard');
+
+    quizCard.innerHTML = renderResultCard();
+    quizCard.classList.remove('onGoingQuizContainer');
+}
+
+function renderResultCard() {
+    return /*html*/ `
+                                    <img src="./assets/img/finish_line.jpeg" class="card-img-top" alt="Result image">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Wir gratulieren dir!</h5>
+                                            <div class="showResult">
+                                                <span>Du hast ${currentScore} von ${quizTasks.length} Fragen richtig beantwortet!</span>
+                                            </div>
+                                            <div class="btnContainer centerButton">
+                                                <button class="btn btn-primary nextQuestion" onclick="startQuiz()">Quiz wiederholen</button>
+                                            </div>
+                                        </div>
+    `;
 }
 
 
 function renderQuestion() {
     return /*html*/`
                                         <img src="${quizTasks[currentRound].image}" class="card-img-top" alt="${quizTasks[currentRound].imageDescription}">
-                                        <div class="card-body">
-                                            <h5 class="card-title">${quizTasks[currentRound].question}</h5>
+                                        <div class="card-body onGoingQuiz">
+                                            <h5 class="card-title headline">${quizTasks[currentRound].question}</h5>
                                             <div id="answer1" class="card answerItem">
                                                 <div class="card-body" onclick="selectAnswer('answer1')">
                                                     <span>${quizTasks[currentRound].answer1}</span>
@@ -188,12 +251,13 @@ function renderQuestion() {
                                                     <span>${quizTasks[currentRound].answer4}</span>
                                                 </div>
                                             </div>
-                                            <div>
+                                            <div class="currentQuestionFromMax">
                                                 <span>${currentQuestion} von ${quizTasks.length} Fragen</span>
                                             </div>
                                             <div class="btnContainer">
-                                                <a href="#" id="previousButton" class="btn btn-secondary lastQuestion" onclick="previousQuestion()">Vorherige Frage</a>
-                                                <a href="#" id="nextButton" class="btn btn-primary nextQuestion" onclick="nextQuestion()">Nächste Frage</a>
+                                                <button id="previousButton" class="btn btn-secondary lastQuestion" onclick="previousQuestion()">Vorherige Frage</button>
+                                                <button id="nextButton" class="btn btn-primary nextQuestion" onclick="nextQuestion()" disabled>Nächste Frage</button>
+                                                <button id="showResultButton" class="btn btn-primary nextQuestion" onclick="showResult()" disabled>Zum Ergebnis</button>
                                             </div>
                                         </div>
     `;

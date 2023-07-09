@@ -28,6 +28,7 @@ main {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    padding: 8px 16px;
 }
 
 .card-body h5 {
@@ -36,6 +37,7 @@ main {
 
 .answerItem {
     text-align: center;
+
 }
 
 .answerItem:hover {
@@ -71,7 +73,7 @@ main {
 }
 
 .onGoingQuizContainer {
-    height: 800px !important;
+    height: 650px !important;
 }
 
 .onGoingQuiz {
@@ -81,9 +83,10 @@ main {
 }
 
 .headline {
-    height: 220px;
+    height: 150px;
     display: flex;
     align-items: center;
+    font-size: 18px;
 }
 
 .centerButton {

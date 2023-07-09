@@ -20,6 +20,10 @@ main {
     object-fit: cover;
 }
 
+.progress {
+    border-radius: 0px  !important;
+}
+
 .card-body {
     display: flex;
     flex-direction: column;
@@ -89,6 +93,11 @@ main {
 
 #showResultButton {
     display: none;
+}
+
+.resultCardImage {
+    height: 300px;
+    object-fit: cover;
 }
 
 #previousButton,

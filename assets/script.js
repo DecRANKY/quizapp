@@ -2,6 +2,9 @@ let currentRound = -1;
 let currentQuestion = 0;
 let currentScore = 0;
 let quizCard;
+let audioSuccess = new Audio('assets/audio/correct-answer.mp3');
+let audioWrong = new Audio('assets/audio/wrong-answer.mp3');
+
 let quizTasks = [
     {
         image: './assets/img/medalofhonor.jpg',
@@ -109,21 +112,9 @@ let quizTasks = [
 function renderQuiz() {
     let mainContainer = document.getElementById('mainContainer');
 
-    mainContainer.innerHTML = /*html*/`
-                                <div id="quizCard" class="card">
-                                    <img src="./assets/img/headerLogo.jpg" class="card-img-top" alt="Did you know?">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Bereit für ein ultimatives Gaming-Quiz?</h5>
-                                        <p class="card-text">
-                                            Teste dein Wissen über die faszinierende Welt der Videospiele und zeig, dass du ein wahrer Gamer bist!
-                                        </p>
-                                        <div class="btnContainer centerButton">
-                                        <button class="btn btn-primary" onclick="startQuiz()">Quiz Starten!</button>
-                                        </div>
-                                    </div>
-                                </div>
-    `;
+    mainContainer.innerHTML = renderMainContainer();
 }
+
 
 function startQuiz() {
     resetRound()
@@ -139,21 +130,24 @@ function startQuiz() {
     document.getElementById('showResultButton').style.display = 'none';
 }
 
+
 function resetRound() {
     currentRound = 0;
     currentQuestion = 1;
     currentScore = 0;
 }
 
+
 function nextQuestion(){
     quizCard = document.getElementById('quizCard');
 
 
-    if (currentRound < quizTasks.length-1) {
+    if (checkForMaxRound()) {
         currentQuestion++;
         currentRound++;
         quizCard.innerHTML = '';
         quizCard.innerHTML = renderQuestion();
+        calcProgressBar();
 
     } else {
         console.log('Es gibt keine weiteren Fragen');
@@ -161,14 +155,16 @@ function nextQuestion(){
     checkAnswer()
 }
 
+
 function previousQuestion() {
     quizCard = document.getElementById('quizCard');
     
-    if (currentRound > 0) {
+    if (minRoundOne()) {
         currentQuestion--;
         currentRound--;
         quizCard.innerHTML = '';
         quizCard.innerHTML = renderQuestion();
+        calcProgressBar();
 
     } else {
         console.log('Du bist bereits bei der ersten Frage angelangt');
@@ -177,31 +173,50 @@ function previousQuestion() {
 }
 
 
+function calcProgressBar() {
+    let percent = currentQuestion / quizTasks.length;
+    percent = Math.round(percent * 100);
+
+    document.getElementById('progress').innerHTML = renderProgressBar(percent);
+}
+
+
+function renderProgressBar(percent) {
+    return /*html*/ `
+                        <div class="progress-bar" role="progressbar" style="width: ${percent}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+    `;
+}
+
+
 function selectAnswer(selection) {
     let selectedQuestionNumber = selection.slice(-1);
     let correctAnswer = `answer${quizTasks[currentRound].rightAnswer}`;
     if (selectedQuestionNumber == quizTasks[currentRound].rightAnswer) {
         document.getElementById(selection).classList.add('bg-success');
+        audioSuccess.play();
         currentScore++;
     } else {
         document.getElementById(selection).classList.add('bg-danger');
         document.getElementById(correctAnswer).classList.add('bg-success');
+        audioWrong.play();
     }
     document.getElementById('nextButton').disabled = false;
     document.getElementById('showResultButton').disabled = false;
 }
 
+
 function checkAnswer() {
 
-    if (currentRound == 0) {
+    if (disablePrevBtnFirstRound()) {
         document.getElementById('previousButton').disabled = true;
-    } else if (currentQuestion == quizTasks.length) {
+    } else if (renderResultButton()) {
         document.getElementById('nextButton').style.display = 'none';
         document.getElementById('showResultButton').style.display = 'block';
     } else {
         document.getElementById('previousButton').disabled = false;
     }
 }
+
 
 function showResult() {
     quizCard = document.getElementById('quizCard');
@@ -210,9 +225,47 @@ function showResult() {
     quizCard.classList.remove('onGoingQuizContainer');
 }
 
+function checkForMaxRound() {
+    currentRound < quizTasks.length-1
+}
+
+
+function disablePrevBtnFirstRound() {
+    currentRound == 0
+}
+
+
+function minRoundOne() {
+    currentRound > 0
+}
+
+
+function renderResultButton() {
+    currentQuestion == quizTasks.length
+}
+
+
+function renderMainContainer() {
+    return /*html*/`
+                                <div id="quizCard" class="card">
+                                    <img src="./assets/img/headerLogo.jpg" class="card-img-top" alt="Did you know?">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Bereit für ein ultimatives Gaming-Quiz?</h5>
+                                        <p class="card-text">
+                                            Teste dein Wissen über die faszinierende Welt der Videospiele und zeig, dass du ein wahrer Gamer bist!
+                                        </p>
+                                        <div class="btnContainer centerButton">
+                                        <button class="btn btn-primary" onclick="startQuiz()">Quiz Starten!</button>
+                                        </div>
+                                    </div>
+                                </div>
+    `
+}
+
+
 function renderResultCard() {
     return /*html*/ `
-                                    <img src="./assets/img/finish_line.jpeg" class="card-img-top" alt="Result image">
+                                    <img src="./assets/img/finish_line.jpeg" class="card-img-top resultCardImage" alt="Result image">
                                         <div class="card-body">
                                             <h5 class="card-title">Wir gratulieren dir!</h5>
                                             <div class="showResult">
@@ -229,6 +282,9 @@ function renderResultCard() {
 function renderQuestion() {
     return /*html*/`
                                         <img src="${quizTasks[currentRound].image}" class="card-img-top quizHeadImage" alt="${quizTasks[currentRound].imageDescription}">
+                                        <div id="progress" class="progress" style="height: 10px;">
+                                            
+                                        </div>
                                         <div class="card-body onGoingQuiz">
                                             <h5 class="card-title headline">${quizTasks[currentRound].question}</h5>
                                             <div id="answer1" class="card answerItem">

@@ -133,3 +133,16 @@ footer * {
     align-items: start;
     gap: 8px;
 }
+
+@media (min-width: 768px) {
+    #quizCard {
+        width: 28rem;
+    }
+
+    .quizHeadImage {
+        height: 240px;
+    }
+    .headline {
+        height: 140px;
+    }
+}

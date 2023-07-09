@@ -226,22 +226,22 @@ function showResult() {
 }
 
 function checkForMaxRound() {
-    currentRound < quizTasks.length-1
+    return currentRound < quizTasks.length-1
 }
 
 
 function disablePrevBtnFirstRound() {
-    currentRound == 0
+    return currentRound == 0
 }
 
 
 function minRoundOne() {
-    currentRound > 0
+    return currentRound > 0
 }
 
 
 function renderResultButton() {
-    currentQuestion == quizTasks.length
+    return currentQuestion == quizTasks.length
 }
 
 
